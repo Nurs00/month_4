@@ -44,7 +44,7 @@ class Product(BaseModel):
     categories = models.ManyToManyField(
         Category,
         verbose_name="Категория",
-        related_name="categories"
+        related_name="products"
     )
 
     def __str__(self) -> str:
