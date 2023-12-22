@@ -16,9 +16,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
-from post.views import hello_view
-from post.views import current_date_view
-from post.views import goodby_view
+from post.views import (hello_view, current_date_view, goodby_view,
+                        anime_view, main_view, product_list_view,
+                        one_piece_view, categories_view)
+
 
 
 urlpatterns = [
@@ -26,4 +27,9 @@ urlpatterns = [
     path('hello/', hello_view),
     path('current_date/', current_date_view),
     path('goodby/', goodby_view),
+    path('anime/', anime_view),
+    path('', main_view),
+    path('products/', product_list_view),
+    path('one_piece/', one_piece_view),
+    path('category/', categories_view)
 ]

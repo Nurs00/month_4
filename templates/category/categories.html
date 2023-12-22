@@ -1,0 +1,13 @@
+{% extends 'Products.html' %}
+
+{% block content %}
+
+{% for catigory in catigories %}
+     <a href="">
+        <p>
+            {{ catigory.name }}
+        </p>
+    </a>
+    <br>
+{% endfor %}
+{% endblock %}
