@@ -21,7 +21,8 @@ from django.urls import path
 from blog import settings
 from post.views import (hello_view, current_date_view, goodby_view,
                         anime_view, main_view, product_list_view,
-                        one_piece_view, categories_view, product_detail_view)
+                        one_piece_view, categories_view, product_detail_view,
+                        product_create_view, categories_create_view)
 
 
 
@@ -35,5 +36,7 @@ urlpatterns = [
     path('products/', product_list_view),
     path('product/<int:product_id>/', product_detail_view),
     path('one_piece/', one_piece_view),
-    path('category/', categories_view)
+    path('category/', categories_view),
+    path('category/create/', categories_create_view),
+    path('products/create/', product_create_view),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

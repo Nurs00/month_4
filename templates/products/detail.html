@@ -12,4 +12,11 @@
     {% for comment in product.comments.all %}
         <p>{{ comment.text }}</p>
     {% endfor %}
+    <div class='create_comment'>
+     <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="create_comment">
+    </form>
+    </div>
 {% endblock %}

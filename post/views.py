@@ -1,7 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils import timezone
-from post.models import Product, Category
+
+from post.forms import ProductCreateForm, CategoryCreateForm, CommentCreateForm
+from post.models import Product, Category, Comment
+
+
 def hello_view(request):
     print(request.method)
     if request.method == 'GET':
@@ -41,8 +45,33 @@ def product_detail_view(request, product_id):
             return render(request, 'errors/404.html')
         context = {
             'product': product,
+            'form': CommentCreateForm()
         }
         return render(request, 'products/detail.html', context=context)
+    elif request.method == 'POST':
+        form = CommentCreateForm(request.POST)
+        if form.is_valid():
+            Comment.objects.create(**form.cleaned_data, product_id=product_id)
+            return redirect(f'/product/{product_id}')
+        context = {
+            'form': form
+        }
+        return render(request, 'products/detail.html', context=context)
+def product_create_view(request):
+    if request.method == 'GET':
+        context = {
+            'form': ProductCreateForm
+        }
+        return render(request, 'products/create.html', context=context)
+    elif request.method == 'POST':
+        form = ProductCreateForm(request.POST, request.FILES)
+        if form.is_valid():
+            Product.objects.create(**form.cleaned_data)
+            return redirect('/products/')
+        context = {
+            'form': form
+        }
+        return render(request, 'products/create.html', context=context)
 
 def one_piece_view(request):
     if request.method == 'GET':
@@ -59,4 +88,19 @@ def categories_view(request):
 
         return render(request, 'category/categories.html', context=context)
 
+def categories_create_view(request):
+    if request.method == 'GET':
+        context = {
+            'form': CategoryCreateForm()
+        }
+        return render(request, 'category/create.html', context=context)
+    elif request.method == 'POST':
+        form = CategoryCreateForm(request.POST)
+        if form.is_valid():
+            Category.objects.create(**form.cleaned_data)
+            return redirect('/category/')
+        context = {
+            'form': form
+        }
+        return render(request, 'category/create.html', context=context)
 
