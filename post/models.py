@@ -10,17 +10,6 @@ class BaseModel(models.Model):
         abstract = True
 
 
-# class Category_type(BaseModel):
-#     name = models.CharField(max_length=255, verbose_name="Название")
-#
-#     def __str__(self) -> str:
-#         return f"{self.name}"
-# #
-#     class Meta:
-#         db_table = 'category'
-#         verbose_name = 'Категория'
-#         verbose_name_plural = 'Категории'
-
 class Category(models.Model):
     name = models.CharField(max_length=200, verbose_name="Дарованное имя")
     created_at = models.DateField(auto_now_add=True, verbose_name="Дата создания")
@@ -33,6 +22,8 @@ class Category(models.Model):
         db_table = 'category'
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
+
+# class Review(models.Model):
 
 class Product(BaseModel):
     image = models.ImageField(upload_to='products', null=True, blank=False, verbose_name="Фото")
@@ -54,3 +45,8 @@ class Product(BaseModel):
         db_table = 'product'
         verbose_name = 'Продукт'
         verbose_name_plural = 'Продукты'
+
+class Comment(models.Model):
+    product = models.ForeignKey('post.Product', on_delete=models.CASCADE, related_name="comments")
+    text = models.TextField()
+    created_at = models.DateTimeField(auto_now_add=True)

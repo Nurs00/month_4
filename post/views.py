@@ -33,6 +33,16 @@ def product_list_view(request):
         }
         return render(request, 'products/list.html', context=context)
 
+def product_detail_view(request, product_id):
+    if request.method == 'GET':
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return render(request, 'errors/404.html')
+        context = {
+            'product': product,
+        }
+        return render(request, 'products/detail.html', context=context)
 
 def one_piece_view(request):
     if request.method == 'GET':
