@@ -14,14 +14,32 @@
             background-size: cover;
             background-position: top;
             background-repeat: no-repeat;
+            color: white;
+        }
+
+        .navbar-light .navbar-brand,
+        .navbar-light .navbar-nav .nav-link {
+            color: black;
+        }
+
+        .navbar-light .navbar-toggler-icon {
+            background-color: black;
+        }
+
+        .page-content {
+            background-color: black;
+            padding: 10px;
+            border-radius: 5px;
+            display: inline-block;
+            margin: 10px;
         }
     </style>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a>
-       <img style="border-radius: 50%" width="80" height="80" src="{% static 'absolut.png' %}" alt="">
+    <a href="/" {% static 'scale_1200.jfif' %}>
+       <img style="border-radius: 50%" width="80" height="80" src="{% static 'scale_1200.jfif' %}" alt="">
       </a>
     <a class="navbar-brand" href="/hello/">Home
      </a>
@@ -34,9 +52,9 @@
           <a class="nav-link active" aria-current="page" href="/products/">Products</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" href="/anime/">Anime</a>
+          <a class="nav-link" href="/anime/">Anime shop</a>
         </li>
-           <li class="nav -item">
+        <li class="nav -item">
           <a class="nav-link" href="/category/">Category</a>
         </li>
         <li class="nav-item dropdown">
@@ -49,7 +67,29 @@
             <li><hr class="dropdown-divider"></li>
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
-        </li>
+           {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/products/create/">Create Post</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/logout/">Logout</a>
+                </li>
+              {% else %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/register/">Register</a>
+                </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/login/">Login</a>
+                </li>
+              {% endif %}
+
+
+              {% if user.is_authenticated %}
+                <li class="nav-item">
+                  <a class="nav-link" href="/auth/profile/">{{ user.username }}</a>
+                </li>
+              {% endif %}
+
       </ul>
       <form class="d-flex">
         <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -58,8 +98,12 @@
     </div>
   </div>
 </nav>
- {% block content %}
-
- {% endblock %}
+<div class="page-content">
+    {% block content %}
+    {% endblock %}
+</div>
 </body>
 </html>
+
+
+

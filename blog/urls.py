@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.urls import path
 
 from blog import settings
+from user.views import register_view, login_view, logout_view, profile_view
 from post.views import (hello_view, current_date_view, goodby_view,
                         anime_view, main_view, product_list_view,
                         one_piece_view, categories_view, product_detail_view,
@@ -39,4 +40,8 @@ urlpatterns = [
     path('category/', categories_view),
     path('category/create/', categories_create_view),
     path('products/create/', product_create_view),
+    path('auth/register/', register_view),
+    path('auth/login/', login_view),
+    path('auth/logout/', logout_view),
+    path('auth/profile/', profile_view),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

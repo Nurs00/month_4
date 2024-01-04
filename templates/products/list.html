@@ -5,7 +5,8 @@
 {% for product in products %}
 
     <div class="card" style=" width: 18rem;">
-        <img src="{{ product.image}}" class="card-img-top" alt="...">
+{#        <img src="{{ product.image}}" class="card-img-top" alt="...">#}
+        <img src="/media/{{ product.image }}">
         <div class="card-body">
             <p class="card-title">{{ product.title }} {{ post.rate }}</p>
             <p class="card-text">{{ product.text }}</p>
