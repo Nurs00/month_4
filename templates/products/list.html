@@ -2,8 +2,17 @@
 
 {% block content %}
 
-{% for product in products %}
 
+<h1>Product List</h1>
+
+<form action="" method="get">
+    <input type="text" name="search" placeholder="Search">
+    <button type="submit">Search</button>
+</form>
+
+{#    <a href="?order=date" method="get">Date</a>#}
+
+{% for product in products %}
     <div class="card" style=" width: 18rem;">
 {#        <img src="{{ product.image}}" class="card-img-top" alt="...">#}
         <img src="/media/{{ product.image }}">
@@ -13,6 +22,16 @@
             <p class="card-text">{{ product.created_at }}</p>
             <a href="/product/{{ product.id }}/" class="btn btn-primary">View detail</a>
         </div>
+    </div>
+
+{% endfor %}
+
+    <div>
+    {% for page in max_page %}
+        <a href="?page={{ page }}" method="get">
+            {{ page }}
+        </a>
+
     </div>
 {% endfor %}
 {% endblock %}

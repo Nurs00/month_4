@@ -1,27 +1,3 @@
-{#{% extends 'Products.html' %}#}
-{#{% load static %}#}
-{##}
-{#{% block content %}#}
-{#    <h1>Product detail</h1>#}
-{#    <h2>{{ product.title }} {{ product.rate }}</h2>#}
-{#    <p>{{ product.content }}</p>#}
-{#    <img src="{{ product.image }}" width="500">#}
-{#    <h2>Dates:</h2>#}
-{#    <p>Created: {{ product.created_at }}</p>#}
-{#    <p>Updated: {{ product.updated_at }}</p>#}
-{#    <h1>Comments:</h1>#}
-{#    {% for comment in product.comments.all %}#}
-{#        <p>{{ comment.text }}</p>#}
-{#    {% endfor %}#}
-{#    <div class='create_comment'>#}
-{#     <form method="post" enctype="multipart/form-data">#}
-{#        {% csrf_token %}#}
-{#        {{ form.as_p }}#}
-{#        <input type="submit" value="create_comment">#}
-{#    </form>#}
-{#    </div>#}
-{#{% endblock %}#}
-
 {% extends 'Products.html' %}
 {% load static %}
 
@@ -29,7 +5,7 @@
     <h1>Product detail</h1>
     <h2>{{ product.title }} {{ product.rate }}</h2>
     <p>{{ product.content }}</p>
-    <img src="/media/{{ product.image }}">  {# Используйте {% static %} для правильной обработки пути к изображению #}
+    <img src="/media/{{ product.image }}">
     <h2>Dates:</h2>
     <p>Created: {{ product.created_at }}</p>
     <p>Updated: {{ product.updated_at }}</p>
@@ -44,6 +20,9 @@
             <input type="submit" value="create_comment">
         </form>
     </div>
+
+    <a href="update/" class="btn btn-primary">Update</a>
+
 {% endblock %}
 
 

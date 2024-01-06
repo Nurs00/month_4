@@ -1,8 +1,9 @@
+from django.db.models import Q
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.utils import timezone
-
-from post.forms import ProductCreateForm, CategoryCreateForm, CommentCreateForm
+from django.conf import settings
+from post.forms import ProductCreateForm, CategoryCreateForm, CommentCreateForm,PostForm2
 from post.models import Product, Category, Comment
 
 
@@ -32,9 +33,29 @@ def product_list_view(request):
     if request.method == 'GET':
         products = Product.objects.all()
 
+        search = request.GET.get('search')
+        print(search)
+
+        if search:
+            products = products.filter(title__contains=search)
+
+        max_page = products.__len__() / settings.OBJECT_PER_PAGE
+
+        if round(max_page) < max_page:
+            max_page += 1
+        else:
+            max_page = round(max_page)
+
+        page = request.GET.get('page', 1)
+
+        start = (int(page) - 1) * settings.OBJECT_PER_PAGE
+        end = int(page) * settings.OBJECT_PER_PAGE
+
         context = {
-            'products': products,
+            'products': products[start:end],
+            'max_page': range(1, int(max_page) + 1),
         }
+
         return render(request, 'products/list.html', context=context)
 
 def product_detail_view(request, product_id):
@@ -73,6 +94,32 @@ def product_create_view(request):
         }
         return render(request, 'products/create.html', context=context)
 
+
+def product_update_view(request, product_id):
+    try:
+        post = Product.objects.get(id=product_id)
+    except Product.DoesNotExist:
+        return render(request, 'errors/404.html')
+
+    if request.method == 'GET':
+        context = {
+            'form': PostForm2(instance=post),
+            'post': post,
+        }
+        return render(request, 'products/update.html', context=context)
+
+    if request.method == 'POST':
+        form = PostForm2(request.POST, request.FILES, instance=post)
+
+        if form.is_valid():
+            form.save()
+            return redirect('/products/')
+        else:
+            context = {
+                'form': form,
+                'post': post,
+            }
+            return render(request, 'products/update.html', context=context)
 def one_piece_view(request):
     if request.method == 'GET':
         return render(request, 'anime/anime.html')

@@ -23,7 +23,6 @@ class Category(models.Model):
         verbose_name = 'Категория'
         verbose_name_plural = 'Категории'
 
-# class Review(models.Model):
 
 class Product(BaseModel):
     image = models.ImageField(upload_to='products', null=True, blank=False, verbose_name="Фото")

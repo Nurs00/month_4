@@ -23,7 +23,7 @@ from user.views import register_view, login_view, logout_view, profile_view
 from post.views import (hello_view, current_date_view, goodby_view,
                         anime_view, main_view, product_list_view,
                         one_piece_view, categories_view, product_detail_view,
-                        product_create_view, categories_create_view)
+                        product_create_view, categories_create_view, product_update_view)
 
 
 
@@ -36,6 +36,7 @@ urlpatterns = [
     path('', main_view),
     path('products/', product_list_view),
     path('product/<int:product_id>/', product_detail_view),
+    path('product/<int:product_id>/update/', product_update_view),
     path('one_piece/', one_piece_view),
     path('category/', categories_view),
     path('category/create/', categories_create_view),
